@@ -9,7 +9,7 @@
 #include "Block.h"
 using namespace std;
 using namespace std::chrono;
-int DrawFrame(Zone zone, Shape shape, char holding){
+int DrawFrame(Zone zone, Shape shape, char holding, char next){
     vector<vector<char>> v;
     system("cls");
     for (int i = 0; i < WIDTH; i++){
@@ -44,6 +44,7 @@ int DrawFrame(Zone zone, Shape shape, char holding){
        cout<<"*";
     }
     cout<<"\n\n\nHolded: "<<holding;
+    cout<<"\n\nNext: "<<next;
     return 0;
 }
 int main(){
@@ -51,7 +52,9 @@ int main(){
     Shape shape = Shape();
     vector<char> blocks = {'J', 'L', 'O', 'T', 'S', 'Z', 'I'};
     char holded = ' ';
-    int code = 0, block = 0;
+    srand(time(0));
+    int code = 0, block = 0, blockn = 0;
+    blockn = rand() % blocks.size();
     bool isShapeSpawned = false, isRotationPressed = false, isHoldingUsed;
     unsigned long diff = 0, fdiff = 0;
     auto lastClock = high_resolution_clock::now().time_since_epoch().count();
@@ -65,7 +68,8 @@ int main(){
             isShapeSpawned = true;
             isHoldingUsed = false;
             srand(time(0));
-            block = rand() % blocks.size();
+            block = blockn;
+            blockn = rand() % blocks.size();
             zone.Check();
             code = shape.Spawn(blocks[block], zone.v);
             if (code == 1){
@@ -105,11 +109,11 @@ int main(){
                     shape.Spawn(nh, zone.v);
                 }
             }
-            DrawFrame(zone, shape, holded);
+            DrawFrame(zone, shape, holded, blocks[blockn]);
         }
         if (fdiff >= 0.5 * CHRONOSECOND)
         {
-            DrawFrame(zone, shape, holded);
+            DrawFrame(zone, shape, holded, blocks[blockn]);
             fdiff -= 0.5 * CHRONOSECOND;
         }
     }
