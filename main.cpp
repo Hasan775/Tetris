@@ -23,6 +23,11 @@ int DrawFrame(Zone zone, Shape shape, char holding, char next){
             v[i].push_back(' ');
         }
     }
+    vector<vector<int>> predicted = shape.Prediction(zone.v);
+    for (auto pred : predicted)
+    {
+        v[pred[1]][pred[0]] = '+';
+    }
     for (auto bl : shape.blocks){
         v[bl.pos[1]][bl.pos[0]] = '#';
     }
@@ -93,6 +98,10 @@ int main(){
             }
             if (code == 100){
                 shape.Right(zone.v);
+            }
+            if (code == 115){
+                shape.instantDescent(zone.v, &isShapeSpawned);
+                shape.Stop(&zone.v);
             }
             if (code == 99 && !isHoldingUsed){
                 isHoldingUsed = true;

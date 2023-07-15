@@ -233,4 +233,29 @@ public:
         }
         return 0;
     }
+    vector<vector<int>> Prediction(vector<vector<int>> zone){
+        vector<vector<int>> ret = {};
+        for (int i = 0; i < HEIGHT; i++){
+            for (int j = 0; j < 4; j++){
+                if (blocks[j].CheckDirection({0, i}, zone)){
+                    if (i == 0){
+                        return {};
+                    }
+                    for (int k = 0; k < 4; k++)
+                    {
+                        ret.push_back({blocks[k].pos[0], blocks[k].pos[1] + i - 1});
+                    }
+                    return ret;
+                }
+            }
+        }
+        return {};
+    }
+    int instantDescent(vector<vector<int>> zone,bool* isShapeSpawned){
+        *isShapeSpawned = false;
+        auto npos = Prediction(zone);
+        for (int i = 0; i < 4; i++){
+            blocks[i].pos = npos[i];
+        }
+    }
 };
