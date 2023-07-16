@@ -3,10 +3,10 @@
 #include <conio.h>
 #include <vector>
 #include <chrono>
-#include "Zone.h"
-#include "Shape.h"
-#include "Globals.h"
-#include "Block.h"
+#include "../headers/Zone.h"
+#include "../headers/Shape.h"
+#include "../headers/Globals.h"
+#include "../headers/Block.h"
 using namespace std;
 using namespace std::chrono;
 int DrawFrame(Zone zone, Shape shape, char holding, char next){
